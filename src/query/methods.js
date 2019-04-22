@@ -57,6 +57,7 @@ export default [
   'union',
   'unionAll',
   'intersect',
+  'except',
   'having',
   'havingRaw',
   'orHaving',

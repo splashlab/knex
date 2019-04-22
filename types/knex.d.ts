@@ -139,6 +139,9 @@ declare namespace Knex {
     // Intersect
     intersect: Intersect;
 
+    // Except
+    except: Except;
+
     // Union
     union: Union;
     unionAll: Union;
@@ -399,6 +402,18 @@ declare namespace Knex {
   }
 
   interface Intersect {
+    (
+      callback: QueryCallback | QueryBuilder | Raw,
+      wrap?: boolean
+    ): QueryBuilder;
+    (
+      callbacks: (QueryCallback | QueryBuilder | Raw)[],
+      wrap?: boolean
+    ): QueryBuilder;
+    (...callbacks: (QueryCallback | QueryBuilder | Raw)[]): QueryBuilder;
+  }
+
+  interface Except {
     (
       callback: QueryCallback | QueryBuilder | Raw,
       wrap?: boolean

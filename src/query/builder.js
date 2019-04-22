@@ -668,6 +668,32 @@ assign(Builder.prototype, {
     return this;
   },
 
+  // Adds an except statement to the query
+  except(callbacks, wrap) {
+    if (arguments.length === 1 || (arguments.length === 2 && isBoolean(wrap))) {
+      if (!Array.isArray(callbacks)) {
+        callbacks = [callbacks];
+      }
+      for (let i = 0, l = callbacks.length; i < l; i++) {
+        this._statements.push({
+          grouping: 'union',
+          clause: 'except',
+          value: callbacks[i],
+          wrap: wrap || false,
+        });
+      }
+    } else {
+      callbacks = toArray(arguments).slice(0, arguments.length - 1);
+      wrap = arguments[arguments.length - 1];
+      if (!isBoolean(wrap)) {
+        callbacks.push(wrap);
+        wrap = false;
+      }
+      this.except(callbacks, wrap);
+    }
+    return this;
+  },
+
   // Adds a `having` clause to the query.
   having(column, operator, value) {
     if (column instanceof Raw && arguments.length === 1) {
